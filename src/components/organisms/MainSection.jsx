@@ -1,9 +1,123 @@
-import React from "react";
+import { useState } from "react";
 import DownArrow from "../../assets/down-arrow.svg";
 import Checkbox from "../../assets/chechkbox.svg";
 import ButtonIcn from "../../assets/button.svg";
 
 const MainSection = () => {
+  const [text1, setText1] = useState("");
+  const [text2, setText2] = useState("");
+  const [comparedText1, setComparedText1] = useState([]);
+  const [comparedText2, setComparedText2] = useState([]);
+  const [isCompared, setIsCompared] = useState(false);
+
+  const createDiff = (text1, text2) => {
+    const words1 = text1.split(/(\s+)/);
+    const words2 = text2.split(/(\s+)/);
+
+    const result1 = [];
+    const result2 = [];
+
+    // Find what's missing in text1 (needs to be added - green)
+    // Find what's extra in text1 (needs to be deleted - red)
+    let i = 0,
+      j = 0;
+
+    while (i < words1.length || j < words2.length) {
+      if (i < words1.length && j < words2.length && words1[i] === words2[j]) {
+        // Same word in both - no change needed
+        result1.push(<span key={`t1-${i}`}>{words1[i]}</span>);
+        result2.push(<span key={`t2-${j}`}>{words2[j]}</span>);
+        i++;
+        j++;
+      } else if (i < words1.length && !words2.slice(j).includes(words1[i])) {
+        // Word exists in text1 but not in text2 - mark for deletion (red)
+        result1.push(
+          <span
+            key={`t1-del-${i}`}
+            className="bg-red-200 text-red-800 px-1 rounded"
+          >
+            {words1[i]}
+          </span>
+        );
+        i++;
+      } else if (j < words2.length && !words1.slice(i).includes(words2[j])) {
+        // Word exists in text2 but not in text1 - mark for addition (green)
+        result1.push(
+          <span
+            key={`t1-add-${j}`}
+            className="bg-green-200 text-green-800 px-1 rounded"
+          >
+            {words2[j]}
+          </span>
+        );
+        j++;
+      } else {
+        // Handle remaining cases
+        if (i < words1.length) {
+          result1.push(<span key={`t1-${i}`}>{words1[i]}</span>);
+          i++;
+        }
+        if (j < words2.length) {
+          result2.push(<span key={`t2-${j}`}>{words2[j]}</span>);
+          j++;
+        }
+      }
+    }
+
+    // For text2, show what needs to be added/removed to match text1
+    i = 0;
+    j = 0;
+
+    while (i < words2.length || j < words1.length) {
+      if (i < words2.length && j < words1.length && words2[i] === words1[j]) {
+        // Same word - already added above
+        i++;
+        j++;
+      } else if (i < words2.length && !words1.slice(j).includes(words2[i])) {
+        // Word exists in text2 but not in text1 - mark for deletion (red)
+        result2.push(
+          <span
+            key={`t2-del-${i}`}
+            className="bg-red-200 text-red-800 px-1 rounded"
+          >
+            {words2[i]}
+          </span>
+        );
+        i++;
+      } else if (j < words1.length && !words2.slice(i).includes(words1[j])) {
+        // Word exists in text1 but not in text2 - mark for addition (green)
+        result2.push(
+          <span
+            key={`t2-add-${j}`}
+            className="bg-green-200 text-green-800 px-1 rounded"
+          >
+            {words1[j]}
+          </span>
+        );
+        j++;
+      } else {
+        if (i < words2.length) i++;
+        if (j < words1.length) j++;
+      }
+    }
+
+    return { result1, result2 };
+  };
+
+  const handleCompare = () => {
+    const { result1, result2 } = createDiff(text1, text2);
+    setComparedText1(result1);
+    setComparedText2(result2);
+    setIsCompared(true);
+  };
+
+  const handleReset = () => {
+    setText1("");
+    setText2("");
+    setComparedText1([]);
+    setComparedText2([]);
+    setIsCompared(false);
+  };
   return (
     <>
       <div className="pt-[24px]">
@@ -36,6 +150,55 @@ const MainSection = () => {
               <img src={ButtonIcn} alt="icn" />
               <span className="text-[#FFFFFF] text-[14px]">ახლის გახსნა </span>
             </button>
+          </div>
+        </div>
+        <div className="mx-[16px] md:mx-[28px] mt-[24px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] mb-[16px]">
+            <div className="flex flex-col">
+              {!isCompared ? (
+                <textarea
+                  className="border-[1px] border-[#EDEDED] bg-[#F0F7FF] rounded-[8px] p-[12px] h-[190px] resize-none focus:outline-none focus:border-[#383A48] md:h-[432px]"
+                  placeholder="დაიწყე წერა..."
+                  value={text1}
+                  onChange={(e) => setText1(e.target.value)}
+                />
+              ) : (
+                <div className="border-[1px] border-[#EDEDED] rounded-[8px] p-[12px] min-h-[120px] bg-[#fafafa] text-[14px] leading-relaxed">
+                  {comparedText1}
+                </div>
+              )}
+            </div>
+            <div className="flex flex-col">
+              {!isCompared ? (
+                <textarea
+                  className="border-[1px] border-[#EDEDED] bg-[#F0F7FF] rounded-[8px] p-[12px] h-[190px] resize-none focus:outline-none focus:border-[#383A48] md:h-[432px]"
+                  placeholder="დაიწყე წერა..."
+                  value={text2}
+                  onChange={(e) => setText2(e.target.value)}
+                />
+              ) : (
+                <div className="border-[1px] border-[#EDEDED] rounded-[8px] p-[12px] min-h-[120px] bg-[#fafafa] text-[14px] leading-relaxed">
+                  {comparedText2}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex gap-[12px] mb-[40px] justify-center mt-[32px]">
+            <button
+              onClick={handleCompare}
+              disabled={!text1 || !text2 || isCompared}
+              className="bg-[#383A48] text-white px-[16px] py-[8px] rounded-[6px] text-[14px] font-medium disabled:bg-[#EDEDED] disabled:text-[#999] hover:bg-[#2a2c38] transition-colors"
+            >
+              შედარება
+            </button>
+            {isCompared && (
+              <button
+                onClick={handleReset}
+                className="bg-[#f5f5f5] text-[#383A48] px-[16px] py-[8px] rounded-[6px] text-[14px] font-medium border-[1px] border-[#EDEDED] hover:bg-[#e8e8e8] transition-colors"
+              >
+                Reset
+              </button>
+            )}
           </div>
         </div>
       </div>
