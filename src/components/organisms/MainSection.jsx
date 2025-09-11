@@ -17,20 +17,16 @@ const MainSection = () => {
     const result1 = [];
     const result2 = [];
 
-    // Find what's missing in text1 (needs to be added - green)
-    // Find what's extra in text1 (needs to be deleted - red)
     let i = 0,
       j = 0;
 
     while (i < words1.length || j < words2.length) {
       if (i < words1.length && j < words2.length && words1[i] === words2[j]) {
-        // Same word in both - no change needed
         result1.push(<span key={`t1-${i}`}>{words1[i]}</span>);
         result2.push(<span key={`t2-${j}`}>{words2[j]}</span>);
         i++;
         j++;
       } else if (i < words1.length && !words2.slice(j).includes(words1[i])) {
-        // Word exists in text1 but not in text2 - mark for deletion (red)
         result1.push(
           <span
             key={`t1-del-${i}`}
@@ -41,7 +37,6 @@ const MainSection = () => {
         );
         i++;
       } else if (j < words2.length && !words1.slice(i).includes(words2[j])) {
-        // Word exists in text2 but not in text1 - mark for addition (green)
         result1.push(
           <span
             key={`t1-add-${j}`}
@@ -52,7 +47,6 @@ const MainSection = () => {
         );
         j++;
       } else {
-        // Handle remaining cases
         if (i < words1.length) {
           result1.push(<span key={`t1-${i}`}>{words1[i]}</span>);
           i++;
@@ -64,17 +58,14 @@ const MainSection = () => {
       }
     }
 
-    // For text2, show what needs to be added/removed to match text1
     i = 0;
     j = 0;
 
     while (i < words2.length || j < words1.length) {
       if (i < words2.length && j < words1.length && words2[i] === words1[j]) {
-        // Same word - already added above
         i++;
         j++;
       } else if (i < words2.length && !words1.slice(j).includes(words2[i])) {
-        // Word exists in text2 but not in text1 - mark for deletion (red)
         result2.push(
           <span
             key={`t2-del-${i}`}
@@ -85,7 +76,6 @@ const MainSection = () => {
         );
         i++;
       } else if (j < words1.length && !words2.slice(i).includes(words1[j])) {
-        // Word exists in text1 but not in text2 - mark for addition (green)
         result2.push(
           <span
             key={`t2-add-${j}`}
