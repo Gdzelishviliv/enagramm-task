@@ -174,7 +174,7 @@ const MainSection = () => {
                   </div>
                 )}
               </div>
-              <img className="absolute top-[50%] left-[50%] transform -translate-y-1/2 -translate-x-1/2 md:rotate-180" src={DownUp} alt="" />
+              <img className="absolute top-[50%] left-[50%] transform -translate-y-1/2 -translate-x-1/2 md:rotate-270 transition-all" src={DownUp} alt="" />
               <div className="flex flex-col">
                 {!isCompared ? (
                   <textarea
