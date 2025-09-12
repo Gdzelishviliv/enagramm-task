@@ -1,7 +1,7 @@
 import BurgerMenuIcn from "../../../assets/menu.svg";
 import MainLogo from "../../../assets/main-logo.svg";
 
-export const Header = () => {
+const Header = () => {
   return (
     <>
       <div className="flex md:px-[30px] justify-between px-[20px] py-[12px] bg-[#132450] h-[60px] transition-all lg:hidden">
@@ -16,3 +16,4 @@ export const Header = () => {
     </>
   );
 };
+export default Header; 
