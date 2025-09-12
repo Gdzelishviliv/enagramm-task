@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import DownArrow from "../../assets/down-arrow.svg";
 import Checkbox from "../../assets/chechkbox.svg";
 import ButtonIcn from "../../assets/button.svg";
+import DownUp from "../../assets/downUp.svg"
 
 const MainSection = () => {
    const [text1, setText1] = useState("")
@@ -155,7 +156,7 @@ const MainSection = () => {
         </div>
         <div className="mx-[16px] md:mx-[28px] mt-[24px]">
           <div className="relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] mb-[16px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[64px] mb-[16px]">
               <div className="flex flex-col">
                 {!isCompared ? (
                   <textarea
@@ -168,11 +169,12 @@ const MainSection = () => {
                     disabled={isLoading}
                   />
                 ) : (
-                  <div className="border-[1px] border-[#EDEDED] rounded-[8px] p-[12px] min-h-[120px] bg-[#fafafa] text-[14px] leading-relaxed">
+                  <div className="border-[1px] border-[#EDEDED] rounded-[8px] p-[12px] h-[190px] md:h-[432px] bg-[#F0F7FF] text-[14px] leading-relaxed">
                     {comparedText1}
                   </div>
                 )}
               </div>
+              <img className="absolute top-[50%] left-[50%] transform -translate-y-1/2 -translate-x-1/2 md:rotate-180" src={DownUp} alt="" />
               <div className="flex flex-col">
                 {!isCompared ? (
                   <textarea
@@ -185,7 +187,7 @@ const MainSection = () => {
                     disabled={isLoading}
                   />
                 ) : (
-                  <div className="border-[1px] border-[#EDEDED] rounded-[8px] p-[12px] min-h-[120px] bg-[#fafafa] text-[14px] leading-relaxed">
+                  <div className="border-[1px] border-[#EDEDED] rounded-[8px] p-[12px] h-[190px] md:h-[432px] bg-[#F0F7FF] text-[14px] leading-relaxed">
                     {comparedText2}
                   </div>
                 )}

@@ -5,7 +5,7 @@ import DownArrow from "../../../assets/down-arrow.svg";
 const SubHeader = () => {
   return (
     <>
-      <div className="flex border-b-[1px] border-[#EDEDED] h-[60px] items-center justify-left px-[30px]">
+      <div className="flex border-b-[1px] border-[#EDEDED] h-[60px] items-center justify-left px-[30px] lg:hidden">
         <div className="flex gap-[4px] items-center justify-center cursor-pointer">
           <img src={SpellSVG} alt="spell" />
           <h3 className="text-[12px] md:text-[16px] font-bold text-[#132450]">
