@@ -1,5 +1,5 @@
 import "./App.css";
-import Header from "./components/molecules/header/Header";
+import Header from "./components/molecules/header/header";
 import DesktopHeader from "./components/molecules/header/DesktopHeader";
 import SubHeader from "./components/molecules/subheader/SubHeader";
 import MainSection from "./components/organisms/MainSection";
@@ -7,7 +7,6 @@ import MainSection from "./components/organisms/MainSection";
 function App() {
   return (
     <>
-      <body>
         <Header />
         <div className="lg:flex lg:flex-row-reverse">
           <div className="lg:w-[100vw]">
@@ -16,7 +15,6 @@ function App() {
           </div>
           <DesktopHeader />
         </div>
-      </body>
     </>
   );
 }
