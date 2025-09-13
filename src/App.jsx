@@ -1,5 +1,5 @@
 import "./App.css";
-import Header from "./components/molecules/header/header";
+import Header from "./components/molecules/header/MobileHeader";
 import DesktopHeader from "./components/molecules/header/DesktopHeader";
 import SubHeader from "./components/molecules/subheader/SubHeader";
 import MainSection from "./components/organisms/MainSection";
